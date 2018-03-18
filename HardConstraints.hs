@@ -30,7 +30,7 @@ tntCheck	Assignment		=	index :: (length Assignment - 1)						-- Get the index/de
 										prevTask :: Assignment !! prevIndex				-- Retrieve previous associated task
 										return (my_element `(prevTask, task)` tntList)	-- Search for a tuple match of form (Int, Int) within the tntList and return
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------								
-chedkHC		::	[Char] -> Bool															-- Setup Function I/O
+checkHC		::	[Char] -> Bool															-- Setup Function I/O
 checkHC 	Assignment		= 	do fpaCheck Assignment									-- Call fpaCheck
 									if fpaCheck == False								-- Verify fpaCheck's return
 										return False									-- If False, return False
