@@ -9,38 +9,28 @@ module HardConstraints
 ( checkHC
 ) where
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-fpaCheck	::	[Char] -> Bool															-- Setup Function I/O
-fpaCheck 	Assignment		= 	index :: (length Assignment - 1)						-- Get the index/depth of current node
-								task :: Assignment !! index								-- Retrieve associated task
-								return (my_element `(length Assignment, task)` fpaList)	-- Search for a tuple match of form (Int, Char) within the fpaList and return
+fpaCheck	::	[Char] -> Bool																							-- Setup Function I/O
+fpaCheck 	Assignment		=	let index = (length Assignment - 1)														-- Get the index/depth of current node
+								in return (my_element (length Assignment, last Assignment) fmList)						-- Search for a tuple match of form (Int, Char) within the fmList and return
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------								
-fmCheck		::	[Char] -> Bool															-- Setup Function I/O
-fmCheck		Assignment		=	index :: (length Assignment - 1)						-- Get the index/depth of current node
-								task :: Assignment !! index								-- Retrieve associated task
-								return (my_element `(length Assignment, task)` fmList)	-- Search for a tuple match of form (Int, Char) within the fmList and return
+fmCheck		::	[Char] -> Bool																							-- Setup Function I/O
+fmCheck		Assignment		=	let index :: (length Assignment - 1)													-- Get the index/depth of current node
+								in return (my_element (length Assignment, last Assignment) fmList)						-- Search for a tuple match of form (Int, Char) within the fmList and return
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------												
-tntCheck	::	[Char] -> Bool															-- Setup Function I/O
-tntCheck	Assignment		=	index :: (length Assignment - 1)						-- Get the index/depth of current node
-							if index = 0												-- Check to see if index is 0
-								return False											-- If so, ignore check and return False
-								else if index = 7										-- Check to see if index is 0
-									task :: Assignment !! index							-- If so, retrieve associated task
-									nextTask :: Assignment !! 0							-- Retrieve associated task at index 0
-									if (my_element `(task, nextTask)` tntList)			-- Search for a tuple match of form (Int, Int) within the tntList
-										return True										-- If match found, return True
-										else do prevIndex :: (index - 1)				-- Else, get the previous index/depth of the node
-										task :: Assignment !! index						-- Retrieve associated task
-										prevTask :: Assignment !! prevIndex				-- Retrieve previous associated task
-										return (my_element `(prevTask, task)` tntList)	-- Search for a tuple match of form (Int, Int) within the tntList and return
+tntCheck	::	[Char] -> Bool																							-- Setup Function I/O
+tntCheck	Assignment		=	let index :: (length Assignment - 1)													-- Get the index/depth of current node.
+								in if index == 0																		-- Check to see if index is 0.
+									then False																			-- If so return False
+									else if index == 7																	-- Check to see if index is 7.
+										then (my_element ((Assignment !! index), (Assignment !! 0)) tntList) && (my_element ((Assignment !! (index - 1)), (Assignment !! index)) tntList)			
+										-- If so attempt to find the edge case tuple, and then attempt to find find the tuple of (index - 1, index)
+										else (my_element ((Assignment !! (index - 1)), (Assignment !! index)) tntList)	-- Attempt to find find the tuple of (index - 1, index)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------								
-checkHC		::	[Char] -> Bool															-- Setup Function I/O
-checkHC 	Assignment		= 	do fpaCheck Assignment									-- Call fpaCheck
-									if fpaCheck == False								-- Verify fpaCheck's return
-										return False									-- If False, return False
-									else do fmCheck Assignment							-- Else call fmCheck
-										if fmCheck == True								-- Verify fmCheck's return
-											return False								-- If True, return False
-										else do tntCheck Assignment						-- Else call tntCheck
-											if tntCheck == True							-- Verify tntCheck's return
-												return False							-- If True, return False
-											else return True							-- Else return True
+checkHC		::	[Char] -> Bool																							-- Setup Function I/O
+checkHC 	Assignment		= 	if fpaCheck Assignment == False															-- Verify fpaCheck's return
+									then False																			-- If False, return False
+									else if fmCheck Assignment == True													-- Else verify fmCheck's return
+											then False																	-- If True, return False
+											else if tntCheck Assignment == True											-- Else Verify tntCheck's return
+												then False																-- If True, return False
+												else True																-- Else return True
