@@ -5,7 +5,10 @@
 	Jesus Cuadra
 	Version 1.03
 -}
-
+module HardConstraints
+( checkHC
+) where
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 fpaCheck	::	[Char] -> Bool															-- Setup Function I/O
 fpaCheck 	Assignment		= 	index :: (length Assignment - 1)						-- Get the index/depth of current node
 								task :: Assignment !! index								-- Retrieve associated task
