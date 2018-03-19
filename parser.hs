@@ -79,14 +79,14 @@ main = do
 		tnpDupless 		= nub tnpString
 		tnpList' 		= makeTTP (map stripBrackets (tnpDupless))
 		tnpList 		= updateValue tnpList'
-		
-	print fpaList
-	print fmList
-	print tntList
-	print mpList
-	print tnpString
-	print tnpList
 	
+	
+	--outPutSolution (300, "ABCDEFGH") outPutName >> exitSuccess
+-------------------------------------------------------------------------------------------------------------------------------	
+outPutSolution :: (Int, String) -> String -> IO() 
+outPutSolution (x,y) n = writeFile n ("Solution "++(y !! 0):[]++' ':[]++(y !! 1):[]++' ':[]++(y !! 2):[]++' ':[]++(y !! 3):[]++' ':[]++(y !! 4):[]++' ':[]++(y !! 5):[]++' ':[]++(y !! 6):[]++' ':[]++(y !! 7):[]++"; Quality: "++((show x)))
+-------------------------------------------------------------------------------------------------------------------------------
+
 stripBrackets :: String -> String
 stripBrackets []	= []
 stripBrackets (x:xs)	| x == '(', (last xs) == ')'	= init xs
@@ -116,7 +116,7 @@ makeTT :: [String] -> [(Char,Char)]
 makeTT []	= []
 makeTT (('(':a:',':b:')':[]):xs)									= ((a, b):(makeTT xs))
 makeTT x	= []
-
+-------------------------------------------------------------------------------------------------------------------------------
 makeTTP :: [String] -> [(Char,Char,Int)]
 makeTTP [] = []
 makeTTP ((a:',':b:',':xs):ys) 										= (a , b , (read xs :: Int)):(makeTTP ys)
@@ -149,12 +149,9 @@ checkMatrix (x:xs) n m
 	|otherwise 														= "exit 1":[]	
 	
 	
-	
+-------------------------------------------------------------------------------------------------------------------------------	
 
--- checkFormating :: String -> Bool
--- checkFormating (a:' ':a:' ':a:' ':a:' ':a:' ':a:' ':a:' ':a:[]) 
 
--- checkFormating  = False
 
 {-CHECKS TO SEE IF THE TRIPLES ARE IN THE RIGHT FORMAT-}
 isTriple :: String -> Bool
