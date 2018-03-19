@@ -1,6 +1,6 @@
 # cpsc449a2
 
-Suggestions for patrick to solve the proble of inputs in the form (,X) or (X,)
+Suggestions for patrick to solve the problem of inputs in the form (,X) or (X,)
 
 1- Convert it into a type, and then see if it matches the expected type?
 
